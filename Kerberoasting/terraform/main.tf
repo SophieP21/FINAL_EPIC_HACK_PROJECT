@@ -175,7 +175,7 @@ resource "azurerm_linux_virtual_machine" "attacker" {
   resource_group_name             = azurerm_resource_group.lab.name
   location                        = azurerm_resource_group.lab.location
   size                            = "Standard_B2s"
-  admin_username                  = "kali"
+  admin_username                  = "attacker"
   admin_password                  = "P@ssw0rd123!ChangeMe"
   disable_password_authentication = false
   
