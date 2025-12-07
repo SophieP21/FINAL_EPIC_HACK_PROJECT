@@ -31,20 +31,31 @@ What the heck is Cross Site Scripting?
 Well it is a web security vulnerability that allows attackers to compromise interactible content on a web site such as file uploads, text boxes, etc.
 
 Step 1: Boot up your Docker contaiter and head to http://localhost:3000
-![alt text](https://github.com/SophieP21/FINAL_EPIC_HACK_PROJECTmain/Images_OWSAP/Screenshot%202025-12-06%20201445.png)
+See Run_Docker_Cont in Images_OWSAP
 
 Step 2: Head to the Login In page in the top right corner and then make a new account by clicking the new user buttin at the bottom.
-![alt text](https://github.com/SophieP21/FINAL_EPIC_HACK_PROJECTmain/Images_OWSAP/Screenshot%202025-12-06%20201729.png)
+See User_Register.png in Images_OWSAP
 
 Step 3: Add something to your cart and then go to your cart and check out. Go through all the screens and enter random information until you reach this screen:
-!{alt text]()
+See Order_sumary.png in Images_OWSAP
 
 Step 4: After the order confirmed screen go to the the top right corner and click on Account -> Orders and Payment -> Order History. You should come to this screen:
-!{alt text]()
+See Order_history.png in Images_OWSAP
 
 Step 5: Click on the little image of the truck in the order information (when you hover over it it should show "Track Order") and it should bring you to this screen:
-!{alt text]()
+See OG_searchresults.png in Images_OWSAP
 
 Step 6: In the url bar replace the current url with this: http://localhost:3000/#/track-result?id=IcanputanythingIwanthere Then reload the page, it should display IcanputanythingIwanthere in the search results as seen here: 
-!{alt text]()
+See edited_searchresults.png in Images_OWSAP
+
+!!!!!BONUS!!!!!
+
+Cross Site Scripting can also be used in another place! 
+
+If you go to the search bar up in the top right and type in (or copy paste if we are being realistic) this:
+
+<iframe src="javascript:alert('Get Got!')">
+
+You should get a popup that says "get got!"
+
 
