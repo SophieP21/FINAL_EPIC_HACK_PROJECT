@@ -57,5 +57,5 @@ If you go to the search bar up in the top right and type in (or copy paste if we
 <iframe src="javascript:alert('Get Got!')">
 
 You should get a popup that says "get got!"
-
+See Get_got_popup.png in Images_OWSAP
 
