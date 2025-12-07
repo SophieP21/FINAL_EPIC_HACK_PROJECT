@@ -100,38 +100,7 @@ resource "azurerm_public_ip" "attacker" {
   allocation_method   = "Static"
 }
 
-# Attacker VM (Kali Linux)
-resource "azurerm_linux_virtual_machine" "attacker" {
-  name                            = "attacker01"
-  resource_group_name             = azurerm_resource_group.lab.name
-  location                        = azurerm_resource_group.lab.location
-  size                            = "Standard_B2s"
-  admin_username                  = "kali"
-  admin_password                  = "P@ssw0rd123!ChangeMe"
-  disable_password_authentication = false
-  
-  network_interface_ids = [
-    azurerm_network_interface.attacker.id,
-  ]
 
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-
-  source_image_reference {
-    publisher = "kali-linux"
-    offer     = "kali"
-    sku       = "kali-2024-3"
-    version   = "latest"
-  }
-
-  plan {
-    name      = "kali-2024-3"
-    product   = "kali"
-    publisher = "kali-linux"
-  }
-}
 
 # NSG for DC
 resource "azurerm_network_security_group" "dc" {
