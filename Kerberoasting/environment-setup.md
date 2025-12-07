@@ -42,3 +42,5 @@ cd terraform
 ### Add Terraform Files
 
 Create `main.tf` and `variables.tf` in the terraform directory using the files from this repository.
+
+### Modify Terraform main.tf passwords
