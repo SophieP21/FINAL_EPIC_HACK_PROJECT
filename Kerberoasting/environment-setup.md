@@ -93,7 +93,49 @@ Terraform will output the build plan and confirm the build actions
 ```bash
 yes
 ```
-Terraform will output the Ip addresses of the 
+The output upon completion will show
+```bash
+Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
 
+Outputs:
 
+attacker_public_ip = "XX.XXX.XXX.XX"
+connection_info = <<EOT
+
+Domain Controller:
+  RDP: XX.XXX.XXX.XXX
+  Username: labadmin
+  Password: P@ssw0rd123!ChangeMe
+
+Attacker Machine:
+  SSH: ssh kali@XX.XXX.XXX.XX
+  Password: P@ssw0rd123!ChangeMe
+
+EOT
+dc_public_ip = "XX.XXX.XXX.XXX"
+```
+Make note of this information though to see this output again use the output command from the working directory
+```bash
+terraform output
+```
+## Configuring Active Directory
+
+Connect to the DC and upload the `setup-lab-dc.ps1` and `setup-kerberoast-targets.ps1` scripts.
+
+Open Powershell as administrator
+
+Run the `setup-lab-dc.ps1` script to configure the DC.
+```Powershell
+.\setup-lab-dc.ps1
+```
+
+Reboot
+```Powershell
+Restart-Computer
+```
+
+Run the `setup-kerberoast-targets.ps1` after the DC has rebooted.
+```Powershell
+.\setup-kerberoast-targets.ps1
+```
 
