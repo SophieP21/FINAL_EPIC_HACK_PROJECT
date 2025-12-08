@@ -2,5 +2,5 @@
 This is for our school project 
 
 ### Check out [OWSAP JUICE SHOP](./OWSAP%20JUICE%20SHOP/) for all of the set up and attack information. 
-### Check out [OWSAO_Lab_Doc](./OWSAP_Juice_Shop_Stuff/OWSAO_Lab_Doc/) for all of the set up, attack information, and purple team information (and one meme).
+### Check out [OWSAP_Lab_Doc.pdf](./OWSAP%20JUICE%20SHOP/OWSAP_Lab_Doc.pdf) for all of the set up, attack information, and purple team information (and one meme).
 ### Check out [Kerberoasting](./kerberoasting/) for all of the set up, attack information and purple team information.
