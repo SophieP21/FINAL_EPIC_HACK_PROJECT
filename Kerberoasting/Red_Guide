@@ -1,4 +1,33 @@
 # Kerberoasting Attack Guide
+## Prerequisites & Context
+
+### Post-Exploitation Attack
+
+Kerberoasting is a **post-exploitation** technique, meaning you need initial access to the domain before performing this attack. You must have:
+
+- Valid domain user credentials
+- Network access to the Domain Controller
+- Impacket tools installed on attacker machine
+
+### Obtaining Initial Credentials
+
+In a real penetration test, initial domain credentials could be obtained through:
+
+- **LLMNR/NBT-NS Poisoning** - Capture authentication attempts on the network
+- **Password Spraying** - Test common passwords against user accounts
+- **Phishing** - Social engineering to obtain credentials
+- **Physical Access** - Dumping credentials from unlocked workstations
+- **Default Credentials** - Service accounts with weak/default passwords
+- **Credential Stuffing** - Using breached credentials from other sources
+
+**For this lab**, we're using a standard domain user account (`jdoe:Welcome123!`) created during setup to simulate having already gained initial access.
+
+### Why This Matters
+
+The power of kerberoasting is that ANY authenticated domain user can request service tickets. You don't need elevated privileges or admin access - just a valid domain account. This makes it a common lateral movement technique after initial compromise.
+
+
+
 
 ## Overview
 
