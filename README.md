@@ -1,6 +1,6 @@
 ## FINAL_EPIC_HACK_PROJECT
 This is for our school project 
 
-### Check out [OWSAP JUICE SHOP](./OWSAP JUICE SHOP/) for all of the set up and attack information. 
+### Check out [OWASP Juice Shop](./owasp-juice-shop/) for all of the set up and attack information. 
 ### Check out [OWSAO_Lab_Doc](./OWSAP_Juice_Shop_Stuff/OWSAO_Lab_Doc/) for all of the set up, attack information, and purple team information (and one meme).
 ### Check out [Kerberoasting](./kerberoasting/) for all of the set up, attack information and purple team information.
