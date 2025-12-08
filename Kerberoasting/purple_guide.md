@@ -7,7 +7,7 @@ Defensive measures to detect and prevent kerberoasting attacks in Active Directo
 
 ## Prevention
 
-### Strong Service Account Passwords
+### 1. Strong Service Account Passwords
 
 Enforce 25+ character passwords for service accounts:
 ```powershell
@@ -22,7 +22,7 @@ After applying a more complex password with the powershell command above, the im
 
 <img width="1244" height="522" alt="image" src="https://github.com/user-attachments/assets/7cb480db-3a38-4531-9452-40604698e533" />
 
-### Managed Service Accounts (gMSA)
+### 2.Managed Service Accounts (gMSA)
 
 Use gMSA for automatic password management:
 ```powershell
@@ -32,14 +32,14 @@ Install-ADServiceAccount -Identity gMSA_SQL
 
 Benefits: 120-character passwords, auto-rotation every 30 days.
 
-### Force AES Encryption
+### 3.Force AES Encryption
 
 Disable RC4, enforce AES:
 ```powershell
 Set-ADUser -Identity svc_sql -KerberosEncryptionType AES128, AES256
 ```
 
-### Least Privilege
+### 4.Least Privilege
 
 Remove service accounts from privileged groups:
 ```powershell
@@ -47,7 +47,7 @@ Get-ADUser svc_sql -Properties MemberOf
 Remove-ADGroupMember -Identity "Domain Admins" -Members svc_sql
 ```
 
-### Protected Users Group
+### 5.Protected Users Group
 
 Add service accounts to Protected Users (forces AES, limits TGT to 4 hours):
 ```powershell
@@ -58,7 +58,7 @@ Note: Test first - may break legacy apps.
 
 ## Detection
 
-### Audit Kerberos Tickets
+### 6.Audit Kerberos Tickets
 
 Enable Event ID 4769 auditing:
 ```powershell
@@ -81,13 +81,12 @@ The screenshot below shows Event ID 4769 capturing a kerberoasting attempt. It r
 <img width="1854" height="825" alt="image" src="https://github.com/user-attachments/assets/cc765d67-b8d8-4557-af67-7b0fc40a366c" />
 
 
-
 Alert on:
 - Single user requesting multiple SPNs rapidly
 - RC4 tickets when AES should be used
 - Unusual request sources
 
-### Honeypot Accounts
+### 7.Honeypot Accounts
 
 Create decoy service accounts:
 ```powershell
@@ -97,7 +96,7 @@ Set-ADUser -Identity "svc_backup_admin" -ServicePrincipalNames @{Add="BackupExec
 
 Alert on any TGS request for this account.
 
-### Detection Tools
+### 8.Detection Tools
 
 **Windows Defender for Endpoint**
 
@@ -150,12 +149,7 @@ Result: Password not cracked.
 | Audit 4769 | Easy | Medium |
 | Honeypots | Easy | High |
 
-## Implementation Order
 
-1. Day 1: Enable auditing, identify weak passwords, create honeypots
-2. Week 1: Reset weak passwords (25+ chars), enforce AES, reduce privileges
-3. Month 1: Migrate to gMSA, implement monitoring
-4. Ongoing: Regular audits, quarterly access reviews
 
 ## References
 
