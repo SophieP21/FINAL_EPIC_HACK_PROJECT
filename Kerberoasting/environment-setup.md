@@ -1,6 +1,4 @@
-Kerberoasting Enironment Setup Guide
-
-# Environment Setup Guide
+# Kerberoasting Environment Setup Guide
 
 ## Prerequisites
 
@@ -31,6 +29,13 @@ az login
 
 Sign in when the browser opens.
 
+### Accept Marketplace Terms
+
+Accept the terms for Ubuntu:
+```bash
+az vm image terms accept --publisher Canonical --offer 0001-com-ubuntu-server-jammy --plan 22_04-lts-gen2
+```
+
 ### Create Project Structure
 ```bash
 mkdir pentesting-lab
@@ -43,7 +48,12 @@ cd terraform
 
 Create `main.tf` and `variables.tf` in the terraform directory using the files from this repository.
 
-### Modify Terraform main.tf passwords
+### Modify Terraform Passwords
+
+Before deploying, change the default passwords in `main.tf`:
+- Search for `P@ssw0rd123!ChangeMe`
+- Replace with your own strong passwords
+- Do not commit these passwords to GitHub
 
 ## Terraform Configuration Files
 
@@ -54,7 +64,7 @@ Defines the Azure infrastructure for the lab environment:
 - **Resource Group**: Container for all lab resources
 - **Virtual Network**: 10.0.0.0/16 network with 10.0.1.0/24 subnet
 - **Domain Controller VM**: Windows Server 2022 (Standard_B2s) with static IP 10.0.1.10
-- **Attacker VM**: Kali Linux (Standard_B2s) with dynamic IP
+- **Attacker VM**: Ubuntu 22.04 (Standard_B2s) with dynamic IP
 - **Public IPs**: Assigned to both VMs for external access
 - **Network Security Groups**: Allow RDP to DC, SSH to attacker, and internal network traffic
 - **Outputs**: Displays public IPs and connection information after deployment
@@ -71,31 +81,33 @@ Optional configuration file that defines customizable parameters:
 
 Variables allow you to modify the deployment without editing main.tf directly.
 
-## Running Terraform from host to build the Azure infrastruction
+## Running Terraform to Build Azure Infrastructure
 
 ### Terraform Commands
-With the configuration files in your directory, set up the working directory with 
+
+Initialize the working directory:
 ```bash
 terraform init
 ```
 
-OPTIONAL: Ensuring the terraform plan is correct, check the output of 'plan' to verify the infrastructure build
+(Optional) Preview the infrastructure plan:
 ```bash
 terraform plan
 ```
 
-To build the Azure infrastructure
+Build the Azure infrastructure:
 ```bash
 terraform apply
 ```
 
-Terraform will output the build plan and confirm the build actions
+Confirm by typing:
 ```bash
 yes
 ```
-The output upon completion will show
-```bash
-Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
+
+The output upon completion will show:
+```
+Apply complete! Resources: 13 added, 0 changed, 0 destroyed.
 
 Outputs:
 
@@ -114,15 +126,17 @@ Attacker Machine:
 EOT
 dc_public_ip = "XX.XXX.XXX.XXX"
 ```
-Make note of this information. To see this output again use the output command from the working directory `/pentesting-lab/terraform/`
+
+Make note of this information. To see this output again from `/pentesting-lab/terraform/`:
 ```bash
 terraform output
 ```
+
 ## Configuring Active Directory
 
-Connect to the DC and upload the `setup-lab-dc.ps1` and `setup-kerberoast-targets.ps1` scripts from the PowerShell dir in the repo.
+Connect to the DC and upload the `setup-lab-dc.ps1` and `setup-kerberoast-targets.ps1` scripts from the PowerShell directory in the repo.
 
-Setting up and connecting through bastion to utilize the GUI can make this process easier.
+Setting up Azure Bastion can make connecting via GUI easier.
 
 Open PowerShell as Administrator.
 
@@ -131,47 +145,56 @@ If you get an execution policy error, run:
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-Run the `setup-lab-dc.ps1` script to configure the DC:
+Run the DC setup script:
 ```powershell
 .\setup-lab-dc.ps1
 ```
-`setup-lab-dc.ps1` Installs Active Directory Domain Services and promotes the server to a Domain Controller for the "lab.local" domain. Configures DNS automatically and prepares the server for reboot.
-Note: You may see warnings about static IP assignment and DNS delegation. These can be ignored in a lab environment.
+
+**What it does:** Installs Active Directory Domain Services and promotes the server to a Domain Controller for the "lab.local" domain. Configures DNS automatically and prepares the server for reboot.
+
+**Note:** You may see warnings about static IP assignment and DNS delegation. These can be ignored in a lab environment.
+
 Reboot:
 ```powershell
 Restart-Computer
 ```
 
-Run the `setup-kerberoast-targets.ps1` after the DC has rebooted:
+After reboot, run the vulnerable accounts script:
 ```powershell
 .\setup-kerberoast-targets.ps1
 ```
-`setup-kerberoast-targets.ps1` Creates vulnerable service accounts with SPNs and regular domain user accounts. Includes three service accounts with varying password strengths (weak, medium, strong) to demonstrate kerberoasting attacks.
+
+**What it does:** Creates vulnerable service accounts with SPNs and regular domain user accounts. Includes three service accounts with varying password strengths (weak, medium, strong) to demonstrate kerberoasting attacks.
 
 ## Setting Up Attack Box
 
-### Installing attacker tools
-Upload the `install-tools.sh` to the attack box, modify permissions and then run the script to install the needed tools.
+### Installing Attacker Tools
+
+Upload `install-tools.sh` to the attack box, modify permissions, and run:
 ```bash
 chmod +x install-tools.sh
-```
-Run the install script 
-```bash
 ./install-tools.sh
 ```
-Exit SSH and reconnect to your Attack Box then verify the tools are working
-```bach
-GetUserSPNs.py -h
-``` 
-## Removing Infrastructure & Lab Clean up
 
-In addition to building the lab enviroment, to clean up the lab enviorment we use terraform
-NOTE: 
-- You may need to login to Azure through the cli again if you deleted the previous terminal session.
-- If Bastion was used to access the Domain Controller then you will need to delete the `lab-vnet-bastion` then run the destroy command.
-
-To delete the infrastructure.
+Exit SSH and reconnect, then verify tools are working:
 ```bash
-terraform destory
+GetUserSPNs.py -h
 ```
 
+## Lab Cleanup
+
+### Removing Infrastructure
+
+**Important Notes:**
+- You may need to login to Azure again: `az login`
+- If Bastion was used, delete it first:
+```bash
+  az network bastion delete --name lab-vnet-bastion --resource-group pentesting-lab-rg
+```
+
+Delete all infrastructure:
+```bash
+terraform destroy
+```
+
+Type `yes` to confirm deletion.
