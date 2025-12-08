@@ -136,7 +136,7 @@ Run the `setup-lab-dc.ps1` script to configure the DC:
 .\setup-lab-dc.ps1
 ```
 `setup-lab-dc.ps1` Installs Active Directory Domain Services and promotes the server to a Domain Controller for the "lab.local" domain. Configures DNS automatically and prepares the server for reboot.
-
+Note: You may see warnings about static IP assignment and DNS delegation. These can be ignored in a lab environment.
 Reboot:
 ```powershell
 Restart-Computer
