@@ -48,6 +48,7 @@ GetUserSPNs.py lab.local/jdoe:Welcome123! -dc-ip 10.0.1.10
 ```
 
 This will list all service accounts with SPNs in the domain.
+###
 <img width="1242" height="207" alt="image" src="https://github.com/user-attachments/assets/2b6895f3-c75f-43f7-8b75-d1cae0619580" />
 
 
@@ -59,6 +60,7 @@ GetUserSPNs.py lab.local/jdoe:Welcome123! -dc-ip 10.0.1.10 -request -outputfile 
 ```
 
 This saves the tickets to `tickets.txt` in a format ready for cracking.
+
 <img width="1331" height="206" alt="image" src="https://github.com/user-attachments/assets/07aea4c8-bbf8-461e-b587-30bd6a1ab886" />
 
 
@@ -95,6 +97,9 @@ crackmapexec smb 10.0.1.10 -u svc_sql -p Password1 -d lab.local
 - `svc_sql` (Password1) - Should crack quickly
 - `svc_web` (Summer2024!) - May take longer
 - `svc_backup` - Will not crack with rockyou.txt
+
+  <img width="1750" height="286" alt="image" src="https://github.com/user-attachments/assets/9018c5ad-29ac-408f-9d82-110aa4a27399" />
+
 
 ## Alternative Tools
 
