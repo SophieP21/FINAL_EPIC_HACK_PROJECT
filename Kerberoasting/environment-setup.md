@@ -163,10 +163,12 @@ Exit SSH and reconnect to your Attack Box then verify the tools are working
 ```bach
 GetUserSPNs.py -h
 ``` 
-## Removing Infrastructure
+## Removing Infrastructure & Lab Clean up
 
-To clean up the lab enviorment we can use terraform again.
-NOTE: You may need to login to Azure through the cli again.
+In addition to building the lab enviroment, to clean up the lab enviorment we use terraform
+NOTE: 
+- You may need to login to Azure through the cli again if you deleted the previous terminal session.
+- If Bastion was used to access the Domain Controller then you will need to delete the `lab-vnet-bastion` then run the destroy command.
 
 To delete the infrastructure.
 ```bash
