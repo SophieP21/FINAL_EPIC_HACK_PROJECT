@@ -4,6 +4,30 @@
 
 Kerberoasting is a post-exploitation attack that targets service accounts in Active Directory. It exploits the Kerberos authentication protocol by requesting service tickets (TGS) that are encrypted with the service account's password hash, then cracking them offline.
 
+## MITRE ATT&CK Mapping
+
+This attack maps to the following MITRE ATT&CK techniques:
+
+**T1558.003 - Steal or Forge Kerberos Tickets: Kerberoasting**
+- Tactic: Credential Access
+- Description: Adversaries request service tickets for accounts with SPNs and attempt to crack them offline to obtain plaintext passwords
+
+**T1087.002 - Account Discovery: Domain Account**
+- Tactic: Discovery
+- Description: Enumerating service accounts with SPNs registered in Active Directory
+
+**T1110.002 - Brute Force: Password Cracking**
+- Tactic: Credential Access
+- Description: Offline cracking of Kerberos ticket hashes using password dictionaries and rules
+
+### Attack Flow
+```
+Initial Access → Discovery → Credential Access
+     (T1078)      (T1087.002)   (T1558.003 + T1110.002)
+```
+
+Reference: https://attack.mitre.org/techniques/T1558/003/
+
 ## Prerequisites & Context
 
 ### Post-Exploitation
@@ -99,6 +123,30 @@ crackmapexec smb 10.0.1.10 -u svc_sql -p Password1 -d lab.local
 - `svc_backup` - Will not crack with rockyou.txt
 
   <img width="1750" height="286" alt="image" src="https://github.com/user-attachments/assets/9018c5ad-29ac-408f-9d82-110aa4a27399" />
+  
+## Understanding the Results
+
+Only `svc_sql` with password "Password1" was successfully cracked. The other two service accounts (`svc_web` and `svc_backup`) resisted the attack because their passwords were not present in the rockyou.txt wordlist.
+
+This demonstrates dictionary attacks only work against passwords that exist in common password lists. "Summer2024!" and the complex password for `svc_backup` are not in rockyou.txt, making them immune to this basic attack approach.
+
+Attackers might spend days or weeks using more advanced techniques (rule-based attacks, masks, or larger wordlists), but the time and resources required increase dramatically with password complexity.
+
+## Advanced Cracking: Rule-Based Attacks
+
+To improve success rates, attackers can use rule-based attacks that apply transformations to wordlist entries (capitalizing letters, adding numbers, appending symbols). Let's attempt this against the remaining tickets:
+```bash
+hashcat -m 13100 tickets.txt /usr/share/wordlists/rockyou.txt -r /usr/share/hashcat/rules/best64.rule --force
+```
+
+The `best64.rule` applies 64 common password patterns to each wordlist entry, such as:
+- Capitalizing first letter
+- Appending common years (2023, 2024)
+- Adding special characters (!@#$)
+- Leetspeak substitutions (a->4, e->3)
+
+This significantly increases the keyspace but also the time required. Even with rules, passwords like "Summer2024!" may still resist cracking if the base word isn't in the wordlist or if the specific transformation pattern isn't covered by the ruleset.
+
 
 
 ## Alternative Tools
