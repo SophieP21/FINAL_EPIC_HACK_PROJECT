@@ -163,4 +163,13 @@ Exit SSH and reconnect to your Attack Box then verify the tools are working
 ```bach
 GetUserSPNs.py -h
 ``` 
+## Removing Infrastructure
+
+To clean up the lab enviorment we can use terraform again.
+NOTE: You may need to login to Azure through the cli again.
+
+To delete the infrastructure.
+```bash
+terraform destory
+```
 
