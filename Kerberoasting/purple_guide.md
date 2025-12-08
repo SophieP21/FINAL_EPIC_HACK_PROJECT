@@ -18,7 +18,7 @@ Before enforing the password character count, we cracked the svc_sql password in
 
 <img width="1897" height="859" alt="Screenshot 2025-12-08 114326" src="https://github.com/user-attachments/assets/05d1bc9c-2590-4c6a-aa69-60a90e37b9bb" />
 
-After applying a more complex password with the powershell command above, the image below shows the dictionairy attack was a failure.
+After applying a more complex password with the powershell command above, the image below shows the following dictionairy attack was a failure.
 
 <img width="1244" height="522" alt="image" src="https://github.com/user-attachments/assets/7cb480db-3a38-4531-9452-40604698e533" />
 
