@@ -1,7 +1,12 @@
-# Kerberoasting Attack Guide
+# Kerberoasting Lab Guide
+
+## Overview
+
+Kerberoasting is a post-exploitation attack that targets service accounts in Active Directory. It exploits the Kerberos authentication protocol by requesting service tickets (TGS) that are encrypted with the service account's password hash, then cracking them offline.
+
 ## Prerequisites & Context
 
-### Post-Exploitation Attack
+### Post-Exploitation
 
 Kerberoasting is a **post-exploitation** technique, meaning you need initial access to the domain before performing this attack. You must have:
 
@@ -9,9 +14,9 @@ Kerberoasting is a **post-exploitation** technique, meaning you need initial acc
 - Network access to the Domain Controller
 - Impacket tools installed on attacker machine
 
-### Obtaining Initial Credentials
+### Obtaining Credentials
 
-In a real penetration test, initial domain credentials could be obtained through:
+In a penetration test, initial domain credentials could be obtained through:
 
 - **LLMNR/NBT-NS Poisoning** - Capture authentication attempts on the network
 - **Password Spraying** - Test common passwords against user accounts
@@ -26,18 +31,12 @@ In a real penetration test, initial domain credentials could be obtained through
 
 The power of kerberoasting is that ANY authenticated domain user can request service tickets. You don't need elevated privileges or admin access - just a valid domain account. This makes it a common lateral movement technique after initial compromise.
 
-
-
-
-## Overview
-
-Kerberoasting is a post-exploitation attack that targets service accounts in Active Directory. It exploits the Kerberos authentication protocol by requesting service tickets (TGS) that are encrypted with the service account's password hash, then cracking them offline.
-
 ## Prerequisites
 
 - Domain user credentials
 - Network access to the Domain Controller
 - Impacket tools installed on attacker machine
+
 
 ## Attack Steps
 
@@ -49,6 +48,9 @@ GetUserSPNs.py lab.local/jdoe:Welcome123! -dc-ip 10.0.1.10
 ```
 
 This will list all service accounts with SPNs in the domain.
+
+<img width="1450" height="222" alt="image" src="https://github.com/user-attachments/assets/40b27373-4159-40e7-93e0-18bf095ef529" />
+
 
 ### 2. Request Service Tickets
 
