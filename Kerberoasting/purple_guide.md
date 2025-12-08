@@ -9,10 +9,16 @@ Defensive measures to detect and prevent kerberoasting attacks in Active Directo
 
 ### 1. Strong Service Account Passwords
 
-Enforce 25+ character passwords for service accounts:
+Reset service account passwords to 25+ characters:
 ```powershell
 Set-ADAccountPassword -Identity svc_sql -Reset -NewPassword (ConvertTo-SecureString "ComplexPassword25Chars!!" -AsPlainText -Force)
 ```
+
+To enforce minimum password length policy domain-wide:
+```powershell
+Set-ADDefaultDomainPasswordPolicy -MinPasswordLength 25 -ComplexityEnabled $true
+```
+
 ## Result
 Before enforing the more complex password, we cracked the svc_sql password (Password1) in 46 seconds as seen in the screenshot below.
 
