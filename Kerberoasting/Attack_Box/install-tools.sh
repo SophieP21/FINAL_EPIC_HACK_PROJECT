@@ -15,6 +15,9 @@ sudo apt install python3-impacket -y
 echo "[+] Installing Python..."
 sudo apt install python-is-python3 -y
 
+echo "[+] Installing crackmapexec..."
+sudo snap install crackmapexec -y
+
 echo "[+] Installing additional tools..."
 sudo apt install -y \
     nmap \
