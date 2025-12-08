@@ -55,13 +55,6 @@ In a penetration test, initial domain credentials could be obtained through:
 
 The power of kerberoasting is that ANY authenticated domain user can request service tickets. You don't need elevated privileges or admin access - just a valid domain account. This makes it a common lateral movement technique after initial compromise.
 
-## Prerequisites
-
-- Domain user credentials
-- Network access to the Domain Controller
-- Impacket tools installed on attacker machine
-
-
 ## Attack Steps
 
 ### 1. Enumerate Service Accounts
@@ -118,9 +111,9 @@ crackmapexec smb 10.0.1.10 -u svc_sql -p Password1 -d lab.local
 
 ## Expected Results
 
-- `svc_sql` (Password1) - Should crack quickly
-- `svc_web` (Summer2024!) - May take longer
-- `svc_backup` - Will not crack with rockyou.txt
+- `svc_sql` (Password1) - Should crack in under a minute
+- `svc_web` (Summer2024!) - Will not crack with rockyou.txt (not in wordlist)
+- `svc_backup` - Will not crack with rockyou.txt (too complex)
 
   <img width="1750" height="286" alt="image" src="https://github.com/user-attachments/assets/9018c5ad-29ac-408f-9d82-110aa4a27399" />
   
