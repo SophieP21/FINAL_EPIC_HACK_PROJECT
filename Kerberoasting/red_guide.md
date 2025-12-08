@@ -140,6 +140,10 @@ The `best64.rule` applies 64 common password patterns to each wordlist entry, su
 
 This significantly increases the keyspace but also the time required. Even with rules, passwords like "Summer2024!" may still resist cracking if the base word isn't in the wordlist or if the specific transformation pattern isn't covered by the ruleset.
 
+This screen shot shows the medium password resisted cracking.
+<img width="1890" height="860" alt="image" src="https://github.com/user-attachments/assets/a3458048-99a0-426b-b3c2-4ea7f9c452cb" />
+
+
 
 ## Notes
 
