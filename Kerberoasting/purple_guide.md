@@ -15,9 +15,11 @@ Set-ADAccountPassword -Identity svc_sql -Reset -NewPassword (ConvertTo-SecureStr
 ```
 ## Result
 Before enforing the password character count, we cracked the svc_sql password in 46 seconds as seen in the screenshot below.
+
 <img width="1897" height="859" alt="Screenshot 2025-12-08 114326" src="https://github.com/user-attachments/assets/05d1bc9c-2590-4c6a-aa69-60a90e37b9bb" />
 
 After applying a more complex password with the powershell command above, the image below shows the dictionairy attack was a failure.
+
 <img width="1244" height="522" alt="image" src="https://github.com/user-attachments/assets/7cb480db-3a38-4531-9452-40604698e533" />
 
 ### Managed Service Accounts (gMSA)
@@ -63,9 +65,11 @@ Enable Event ID 4769 auditing:
 auditpol /set /subcategory:"Kerberos Service Ticket Operations" /success:enable
 ```
 First we enable auditing using the command above
+
 <img width="788" height="55" alt="image" src="https://github.com/user-attachments/assets/c2a9aa7a-ed93-4d1f-8416-f1fb58b618a8" />
 
 Following this we can run the attack
+
 <img width="1886" height="278" alt="image" src="https://github.com/user-attachments/assets/39ca3eaa-9037-4728-99dc-09edd5efe76d" />
 
 Show ID 4769 event logs 
@@ -73,6 +77,7 @@ Show ID 4769 event logs
 Get-WinEvent -FilterHashtable @{LogName='Security';ID=4769} -MaxEvents 5 | Format-List TimeCreated, Message
 ```
 The screenshot below shows Event ID 4769 capturing a kerberoasting attempt. It reveals the requesting account (jdoe@LAB.LOCAL), the targeted service account (svc_backup), the weak RC4 encryption type (0x17), and the attacker's IP address (10.0.1.4). This demonstrates that kerberoasting activity is logged and can be monitored for detection and incident response.
+
 <img width="1854" height="825" alt="image" src="https://github.com/user-attachments/assets/cc765d67-b8d8-4557-af67-7b0fc40a366c" />
 
 
