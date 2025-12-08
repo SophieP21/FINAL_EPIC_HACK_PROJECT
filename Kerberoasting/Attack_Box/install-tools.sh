@@ -33,11 +33,6 @@ echo "[+] Installing pip and additional Python tools..."
 sudo apt install python3-pip -y
 pip3 install ldap3 bloodhound
 
-echo "[+] Installing CrackMapExec via pipx..."
-sudo apt install pipx -y
-pipx ensurepath
-pipx install crackmapexec
-
 echo "[+] Adding Impacket to PATH..."
 echo 'export PATH=$PATH:/usr/share/doc/python3-impacket/examples' >> ~/.bashrc
 export PATH=$PATH:/usr/share/doc/python3-impacket/examples
