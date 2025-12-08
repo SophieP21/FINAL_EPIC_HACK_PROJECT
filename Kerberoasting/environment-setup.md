@@ -135,6 +135,7 @@ Run the `setup-lab-dc.ps1` script to configure the DC:
 ```powershell
 .\setup-lab-dc.ps1
 ```
+`setup-lab-dc.ps1` Installs Active Directory Domain Services and promotes the server to a Domain Controller for the "lab.local" domain. Configures DNS automatically and prepares the server for reboot.
 
 Reboot:
 ```powershell
@@ -145,6 +146,8 @@ Run the `setup-kerberoast-targets.ps1` after the DC has rebooted:
 ```powershell
 .\setup-kerberoast-targets.ps1
 ```
+`setup-kerberoast-targets.ps1` Creates vulnerable service accounts with SPNs and regular domain user accounts. Includes three service accounts with varying password strengths (weak, medium, strong) to demonstrate kerberoasting attacks.
+
 ## Setting Up Attack Box
 
 ### Installing attacker tools
