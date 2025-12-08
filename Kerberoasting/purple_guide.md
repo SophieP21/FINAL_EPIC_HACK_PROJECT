@@ -14,7 +14,7 @@ Enforce 25+ character passwords for service accounts:
 Set-ADAccountPassword -Identity svc_sql -Reset -NewPassword (ConvertTo-SecureString "ComplexPassword25Chars!!" -AsPlainText -Force)
 ```
 ## Result
-Before enforing the password character count, we cracked the svc_sql password in 46 seconds as seen in the screenshot below.
+Before enforing the more complex password, we cracked the svc_sql password (Password1) in 46 seconds as seen in the screenshot below.
 
 <img width="1897" height="859" alt="Screenshot 2025-12-08 114326" src="https://github.com/user-attachments/assets/05d1bc9c-2590-4c6a-aa69-60a90e37b9bb" />
 
