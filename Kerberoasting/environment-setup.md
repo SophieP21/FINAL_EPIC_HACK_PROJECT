@@ -53,7 +53,7 @@ Create `main.tf` and `variables.tf` in the terraform directory using the files f
 Before deploying, change the default passwords in `main.tf`:
 - Search for `P@ssw0rd123!ChangeMe`
 - Replace with your own strong passwords
-- Do not commit these passwords to GitHub
+
 
 ## Terraform Configuration Files
 
@@ -120,7 +120,7 @@ Domain Controller:
   Password: P@ssw0rd123!ChangeMe
 
 Attacker Machine:
-  SSH: ssh kali@XX.XXX.XXX.XX
+  SSH: ssh attacker@XX.XXX.XXX.XX
   Password: P@ssw0rd123!ChangeMe
 
 EOT
